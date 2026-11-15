@@ -1,0 +1,91 @@
+GIT COMMANDS USED IN THE ASSIGNMENT
+Name: Yash Thakare
+====================================================================
+
+--- One-time setup ---
+git config --global user.name "Yash Thakare"
+    Sets the author name recorded on every commit.
+git config --global user.email "<your-email>"
+    Sets the author email recorded on every commit (use the email linked to your GitHub account).
+
+--- Step 1: Local repository setup ---
+mkdir SDP-SGA-2 && cd SDP-SGA-2
+    Creates the project folder and moves into it (shell commands, not Git).
+git init -b main
+    Initializes a new, empty local Git repository with "main" as the default branch.
+git status
+    Shows the current branch and which files are untracked, modified or staged.
+
+--- Step 2: Git workflow ---
+git add index.html about.html
+    Stages the two HTML files so they are included in the next commit.
+git commit -m "Initial commit: add index.html and about.html"
+    Records the staged files as the first snapshot (initial state) of the project.
+git diff
+    Shows line-by-line changes in the working directory that are not yet staged.
+git add index.html
+    Stages the modified index.html.
+git commit -m "Update index.html: add introduction paragraph"
+    Creates the second commit containing the modification.
+git branch feature
+    Creates a new branch named "feature" pointing at the current commit.
+git switch feature
+    Switches the working directory to the "feature" branch (older equivalent: git checkout feature).
+git branch
+    Lists all local branches; the current one is marked with *.
+git add about.html
+    Stages the change made on the feature branch.
+git commit -m "Feature: add contact info to about.html"
+    Commits the change to the feature branch only.
+git switch main
+    Switches back to the main branch.
+git merge --no-ff feature -m "Merge branch feature into main"
+    Merges feature into main; --no-ff forces a merge commit so the branch is visible in history.
+git log --oneline --graph --all
+    Displays the full commit history of all branches as a compact graph.
+
+--- Step 3: .gitignore ---
+cat .gitignore
+    Prints the .gitignore file (contains "*.log" and "temp/").
+git check-ignore -v debug.log temp/notes.txt
+    Confirms which .gitignore rule ignores each file.
+git add .gitignore
+    Stages the .gitignore file.
+git commit -m "Add .gitignore to ignore .log files and temp/ folder"
+    Commits the ignore rules to the repository.
+
+--- Step 4: Undo operation ---
+git add index.html
+git commit -m "Add footer comment to index.html"
+    Makes the additional commit that will be undone.
+git log --oneline -3
+    Shows the last three commits before the undo.
+git revert --no-edit HEAD
+    Undoes the last commit by creating a new commit that reverses its changes; history is kept,
+    so it is safe for commits that are (or will be) pushed to GitHub.
+git log --oneline -4
+    Shows the history after the undo: the original commit plus the new "Revert" commit.
+git status
+    Confirms the working tree is clean after the undo.
+(Alternative) git reset --soft HEAD~1
+    Removes the last commit from history but keeps its changes staged (use only before pushing).
+(Alternative) git reset --hard HEAD~1
+    Removes the last commit AND discards its changes completely.
+
+--- Step 5: GitHub integration ---
+git remote add origin https://github.com/<your-username>/SDP-SGA-2.git
+    Links the local repository to the empty public GitHub repository under the name "origin".
+git remote -v
+    Verifies the remote URL for fetch and push.
+git push -u origin main
+    Uploads the main branch and all its history to GitHub and sets origin/main as upstream.
+git push origin feature
+    Uploads the feature branch too, so branch activity is visible on GitHub.
+
+--- Step 6: Documentation ---
+git add git_commands.txt
+    Stages this documentation file.
+git commit -m "Add git_commands.txt documenting all commands"
+    Commits the documentation file.
+git push
+    Pushes the latest commit to GitHub.
